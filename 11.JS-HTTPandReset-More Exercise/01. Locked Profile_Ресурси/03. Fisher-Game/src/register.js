@@ -1,3 +1,1 @@
-function register(){
- console.log('work');
-};
+console.log('TODO:// Implement Register functionality');
