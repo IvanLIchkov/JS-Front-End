@@ -7,9 +7,9 @@ let input = document.getElementById('title');
 async function addItem(event){
     event.preventDefault();
 
-    // if(typeof title.value !== 'string' || title.value.length <=3){
-    //     return;
-    // }
+    if(typeof title.value !== 'string' || title.value.length <=3){
+        return;
+    }
     let response = await fetch('http://localhost:3030/jsonstore/tasks/',{
         method: 'POST',
         headers:{
