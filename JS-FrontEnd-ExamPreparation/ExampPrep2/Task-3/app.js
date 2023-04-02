@@ -63,7 +63,7 @@ async function loadProducts(event){
 function updateProduct(event){
   addProductBtn.disabled = true;
   updateProductBtn.disabled = false;
-  updateProductBtn.id = event.target.id;
+  sessionStorage.setItem('id', event.target.id);
   const data = event.target.parentElement.parentElement.querySelectorAll('td');
   fields[0].value = data[0].textContent;
   fields[1].value = data[1].textContent;
@@ -72,7 +72,7 @@ function updateProduct(event){
 
 async function updateProductToServer(event){
   event.preventDefault();
-  const updateId = event.target.id;
+  const updateId = sessionStorage.getItem('id');
   const product = fields[0].value;
     const count = fields[1].value;
     const price = fields[2].value;
@@ -88,7 +88,7 @@ async function updateProductToServer(event){
       },
         body: JSON.stringify(newProduct)
     });
-    fields.forEach(f=>{
+    Array.from(fields).forEach(f=>{
       f.value = '';
     });
     loadProducts(event);
@@ -121,7 +121,7 @@ async function addProductToList(event){
       },
         body: JSON.stringify(newProduct)
     });
-    fields.forEach(f=>{
+    Array.from(fields).forEach(f=>{
       f.value = '';
     });
     loadProducts(event);
