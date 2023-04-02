@@ -78,7 +78,7 @@ function attachEvents() {
       event.target.textContent = 'Submit';
       const newInputField = document.createElement('input');
       newInputField.value = spanField.textContent;
-      box.insertBefore(newInputField, box.firstChild)
+      box.replaceChild(newInputField, spanField)
       spanField.style.display = 'none';
   
   };
