@@ -51,12 +51,12 @@ async function loadProducts(event){
       list.appendChild(tr);
     });
     let updateButtons = list.querySelectorAll('button.update');
-    updateButtons.forEach(btn=>{
+    Array.from(updateButtons).forEach(btn=>{
       btn.addEventListener('click', updateProduct);
     });
 
     let deleteButtons = list.querySelectorAll(`button.delete`);
-    deleteButtons.forEach(btn=>{
+    Array.from(deleteButtons).forEach(btn=>{
       btn.addEventListener('click', deleteProduct);
     })
 };
