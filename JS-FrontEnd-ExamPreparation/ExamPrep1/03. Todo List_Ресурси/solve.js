@@ -97,7 +97,7 @@ function attachEvents() {
           body: JSON.stringify({name})
       });
       if(response.ok){
-          await printTasks(event);
+          await printTasks();
       }
   
   };
