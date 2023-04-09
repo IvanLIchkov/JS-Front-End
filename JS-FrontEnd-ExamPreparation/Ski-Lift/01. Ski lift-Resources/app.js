@@ -128,7 +128,7 @@ function solve() {
     article.appendChild(pDate);
     article.appendChild(pDays);
     article.appendChild(pPeople);
-
+    
     const confirmBtn = document.createElement("button");
     confirmBtn.className = "confirm-btn";
     confirmBtn.textContent = "Confirm";
@@ -168,3 +168,4 @@ function solve() {
     nextStepBtn.disabled = false;
   }
 };
+
