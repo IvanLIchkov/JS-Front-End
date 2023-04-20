@@ -38,7 +38,7 @@ async function loadBoard(event){
           li.id = d._id;
           const newBtn = document.createElement('button')
           if(d.status === 'ToDo'){
-            newBtn.textContent = 'Move to In Proggress'
+            newBtn.textContent = 'Move to In Progress'
             newBtn.addEventListener('click', moveProgress);
             li.appendChild(newBtn);
             toDo.querySelector('ul').appendChild(li);
@@ -62,6 +62,7 @@ async function loadBoard(event){
             done.querySelector('ul').appendChild(li);
           }
         })
+        done();
     }catch(err){
         console.error(err);
     };
@@ -73,7 +74,7 @@ async function moveProgress(event){
     li.querySelector('button').addEventListener('click', moveToReview)
     li.querySelector('button').textContent = 'Move to Code Review'
     inProgress.querySelector('ul').appendChild(li);
-    const resposne = await fetch(`http://localhost:3030/jsonstore/tasks/${idForChange}`,{
+    try{const resposne = await fetch(`http://localhost:3030/jsonstore/tasks/${idForChange}`,{
         method: 'PATCH',
         headers:{
             'Content-Type': 'application/json'
@@ -81,6 +82,11 @@ async function moveProgress(event){
         body: JSON.stringify({status:'In Progress'})
     });
     event.target.parentElement.remove();
+    done();
+}catch(e){
+    
+}
+
 };
 async function moveToReview(event){
     const li = event.target.parentElement.cloneNode(true);
@@ -88,14 +94,20 @@ async function moveToReview(event){
     li.querySelector('button').addEventListener('click',moveToDone )
     li.querySelector('button').textContent = 'Move to Done'
     codeReview.querySelector('ul').appendChild(li);
-    const resposne = await fetch(`http://localhost:3030/jsonstore/tasks/${idForChange}`,{
-        method: 'PATCH',
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({status:'Code Review'})
-    });
-    event.target.parentElement.remove();
+    try{
+        const resposne = await fetch(`http://localhost:3030/jsonstore/tasks/${idForChange}`,{
+            method: 'PATCH',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({status:'Code Review'})
+        });
+        event.target.parentElement.remove();
+        done();
+    }catch(e){
+
+    }
+    
 };
 async function moveToDone(event){
     const li = event.target.parentElement.cloneNode(true);
@@ -103,35 +115,53 @@ async function moveToDone(event){
     li.querySelector('button').textContent = 'Close'
     li.querySelector('button').addEventListener('click', closeTask)
     done.querySelector('ul').appendChild(li);
-    const resposne = await fetch(`http://localhost:3030/jsonstore/tasks/${idForChange}`,{
-        method: 'PATCH',
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({status:'Done'})
-    });
-    event.target.parentElement.remove();
+    try{
+        const resposne = await fetch(`http://localhost:3030/jsonstore/tasks/${idForChange}`,{
+            method: 'PATCH',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({status:'Done'})
+        });
+        event.target.parentElement.remove();
+        done();
+    }catch(e){
+
+    }
+
 };
 async function closeTask(event){
     const idForDelete = event.target.parentElement.id;
-    const response = await fetch(`http://localhost:3030/jsonstore/tasks/${idForDelete}`,{
-        method: 'DELETE'
-    });
-    loadBoard(event);
+    try{
+        const response = await fetch(`http://localhost:3030/jsonstore/tasks/${idForDelete}`,{
+            method: 'DELETE'
+        });
+        loadBoard(event);
+        done();
+    }catch(e){
+
+    }
+   
 };
 const taskTitle = document.getElementById('title');
 const taskDesc = document.getElementById('description');
 
 async function addTask(event){
     event.preventDefault();
-    const response = await fetch('http://localhost:3030/jsonstore/tasks/', {
-        method: 'POST',
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({title:taskTitle.value, description:taskDesc.value, status:'ToDo'})
-    });
-    loadBoard(event);
+    try{
+        const response = await fetch('http://localhost:3030/jsonstore/tasks/', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({title:taskTitle.value, description:taskDesc.value, status:'ToDo'})
+        });
+        loadBoard(event);
+        done();
+    }catch(e){
+
+    }
+   
     taskTitle.value = '';
     taskDesc.value = '';
 };

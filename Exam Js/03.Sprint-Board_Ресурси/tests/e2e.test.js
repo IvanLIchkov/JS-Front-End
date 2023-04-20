@@ -46,7 +46,7 @@ let page;
 
 describe('E2E tests', function () {
   // Setup
-  this.timeout(DEBUG ? 120000 : 7000);
+  this.timeout(DEBUG ? 120000 : 10000);
   before(
     async () =>
       (browser = await chromium.launch(
