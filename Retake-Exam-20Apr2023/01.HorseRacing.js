@@ -69,7 +69,7 @@ function solve(input) {
       return;
     }
   }
-}
+};
 
 
 solve(['Onyx|Domino|Sugar',
